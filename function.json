@@ -1,0 +1,148 @@
+{
+  "type": "scalar.function",
+  "input_schema": {
+    "type": "object",
+    "description": "A photograph containing a cat to evaluate for focus dominance — whether the cat is the sharpest and most crisply rendered element in the image relative to its surroundings.",
+    "properties": {
+      "photograph": {
+        "type": "image",
+        "description": "A photograph containing a cat situated within a scene. The function evaluates whether the cat holds a relative focus advantage over the rest of the scene — whether the optics of the photograph direct the viewer's attention toward the cat as the intended subject. The image may come from any source or context, featuring a cat surrounded by other visual elements at varying levels of focus."
+      }
+    },
+    "required": [
+      "photograph"
+    ]
+  },
+  "tasks": [
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "Look at this photograph of a cat. How would you describe the clarity and definition of the cat itself? Is the cat rendered crisply — with well-defined edges, visible fur texture, and sharp features like its eyes and whiskers — or does it appear soft and poorly defined?"
+            },
+            {
+              "$jmespath": "input.photograph"
+            }
+          ]
+        }
+      ],
+      "responses": [
+        [
+          {
+            "type": "text",
+            "text": "The cat is rendered with excellent clarity. Its fur shows visible texture, its eyes are sharp and detailed, and the edges of its form are well-defined. The camera clearly found the cat and held focus on it — it feels present and tangible in the frame, as though you could reach out and touch it."
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "text": "The cat has moderate definition. Some features are reasonably clear but overall it lacks the crispness that would make it feel like the deliberately focused subject. It reads as somewhat focused but not commandingly sharp."
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "text": "The cat is soft and lacks definition. Its features are blurry, edges are indistinct, and there is little visible detail in its fur or eyes. It does not read as the intentionally focused element — it feels approximate and ghostly rather than sharp and present."
+          }
+        ]
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.5 + output['scores'][2] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "developer",
+          "content": [
+            {
+              "type": "text",
+              "text": "You are a photography expert evaluating the relationship between a cat subject and its background in photographs. Focus specifically on whether the background is softer and less defined than the cat, creating visual separation that grants the cat focal authority over the scene."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "Here is a photograph containing a cat. Compare the sharpness of the cat to the sharpness of its surroundings. Does the background fall away into softness while the cat stays sharp, or is everything rendered at a similar level of detail?"
+            },
+            {
+              "$jmespath": "input.photograph"
+            }
+          ]
+        }
+      ],
+      "responses": [
+        [
+          {
+            "type": "text",
+            "text": "The background clearly falls away into softness while the cat remains sharp. There is strong separation between subject and surroundings — the environment yields its visual authority, and the cat stands out as the focal point of the image with a decisive sharpness advantage over everything around it."
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "text": "There is some separation between the cat and its background, but it is not dramatic. The surroundings are slightly softer than the cat but retain enough detail and sharpness to partially compete for the viewer’s attention. The cat has a mild focus advantage over the scene."
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "text": "The cat and its surroundings are rendered at a similar level of sharpness. The background does not yield to the cat — everything in the frame is equally crisp or equally soft. The cat holds no special focal position in the visual hierarchy of the image."
+          }
+        ]
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.5 + output['scores'][2] * 0.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "user",
+          "content": [
+            {
+              "$jmespath": "input.photograph"
+            },
+            {
+              "type": "text",
+              "text": "When you first look at this photograph, where does your eye land? Does the image pull your gaze toward the cat and hold it there — as though looking at the cat feels inevitable — or does your attention drift to other elements in the scene?"
+            }
+          ]
+        }
+      ],
+      "responses": [
+        [
+          {
+            "type": "text",
+            "text": "My eye goes straight to the cat and stays there. The image creates a powerful sense of visual magnetism — the cat is unmistakably the thing this photograph is about. The way sharpness and contrast converge on the cat makes it feel inevitable as the focal subject. Everything else in the frame recedes."
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "text": "The cat draws my attention initially, but my eye wanders. There is some focal pull toward the cat, but other elements in the scene compete for attention. The image does not fully commit to directing the viewer’s gaze toward the cat and holding it there."
+          }
+        ],
+        [
+          {
+            "type": "text",
+            "text": "My eye does not naturally land on the cat. I have to actively search for it among the other elements in the frame. The photograph does not create any particular visual magnetism toward the cat — it is just another element in the scene rather than the clear subject the image delivers to me."
+          }
+        ]
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 1.0 + output['scores'][1] * 0.5 + output['scores'][2] * 0.0"
+      }
+    }
+  ],
+  "description": "Scores whether a cat holds focus dominance in a photograph — whether it is the sharpest element relative to its surroundings. Evaluates subject clarity, background separation, and focal pull to determine if the optics direct the viewer's eye toward the cat as the intended subject."
+}

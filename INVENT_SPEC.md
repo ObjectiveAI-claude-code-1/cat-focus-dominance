@@ -1,0 +1,5 @@
+Evaluate the focus dominance of the cat in the photograph. Score whether the cat is the sharpest and most crisply rendered element in the image relative to its surroundings. A cat rendered in clear focus while the background falls away into softness draws the viewer's eye naturally and effortlessly. A cat that is blurry, soft, or no sharper than everything else in the frame loses its focal authority.
+
+This evaluation is not concerned with absolute image sharpness or technical resolution. It measures whether the cat holds a relative focus advantage over the rest of the scene — whether the optics of the photograph direct the viewer's attention toward the cat as the thing the camera was trying to see. A slightly soft image where the cat is still the sharpest element should score higher than a uniformly sharp image where the cat enjoys no focal advantage.
+
+Score high when the cat is distinctly in focus while its surroundings are softer, creating a natural focal pull toward the cat. Score low when the cat is out of focus, equally sharp as everything else, or softer than the background — causing the viewer's eye to drift away from the cat rather than toward it.
